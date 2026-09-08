@@ -5,7 +5,11 @@
 
 Consultas públicas da Secretaria Municipal de Educação.
 
-Publicado em `smedigital.com.br/presenca/` pelo GitHub Pages.
+Publicado em `smedigital.com.br/site/` pelo GitHub Pages.
+
+⚠️ O endereço **não** é `/presenca/` — este arquivo dizia isso e estava
+errado. Medido em 2026-09-08: `/presenca/` responde 404 e `/site/`
+responde 200.
 ---
 
 ## Regras da rede SME — valem para TODOS os sistemas
@@ -13,17 +17,24 @@ Publicado em `smedigital.com.br/presenca/` pelo GitHub Pages.
 > Esta seção é padrão e idêntica em todos os repositórios da SME Ribeirão Preto.
 > Ao alterá-la, replique nos demais.
 
-### 1. Todo repositório aqui é PÚBLICO
+### 1. O repositório é privado — mas o SITE continua PÚBLICO
+
+Desde 2026-09-08 os repositórios desta rede são **privados**, e o GitHub Pages
+publica a partir deles (assinatura GitHub Pro). O que ficou fechado foi o
+**código e o histórico do Git**.
+
+⚠️ **Aqui isso muda pouco — porque o pior caminho nunca foi o repositório.** O
+site é publicado pelo **GitHub Pages a partir da raiz do repositório**: todo
+arquivo commitado vira URL pública, e `db/carga.sql` no Git é
+`smedigital.com.br/site/db/carga.sql` no navegador, baixável por qualquer um,
+sem login e sem passar pelo GitHub. Não existe "arquivo escondido no
+repositório", e privá-lo não criou um.
 
 Trate cada commit como publicação. O histórico do Git guarda para sempre: apagar
 depois exige reescrita de histórico, força-push em todas as branches e abertura
 de chamado no suporte do GitHub para purgar referências em pull requests. Já
-aconteceu nesta rede e levou semanas.
-
-Pior que isso: o site é publicado pelo **GitHub Pages a partir da raiz do
-repositório**. Todo arquivo commitado vira URL pública — `db/carga.sql` no Git é
-`smedigital.com.br/site/db/carga.sql` no navegador, baixável por qualquer um,
-sem passar pelo GitHub. Não existe "arquivo escondido no repositório".
+aconteceu nesta rede e levou semanas. E privar depois **não desfaz o que já
+esteve público**: quem clonou, tem.
 
 #### Regra dura: script SQL não entra no Git
 
@@ -42,7 +53,8 @@ Como funciona no lugar disso:
 Isto não é hipótese. Até 2026-08-25 este repositório versionava 17 arquivos
 `.sql`; quatro deles somavam **3.152 e-mails de servidores da rede**, e ficaram
 baixáveis pela web enquanto estiveram lá. Foram retirados do `HEAD`; o histórico
-ainda os contém.
+ainda os contém, e privar o repositório em 2026-09-08 não desfez a exposição —
+apenas fechou a porta daí em diante.
 
 **Também nunca versione:**
 
@@ -180,6 +192,10 @@ using ( (select public.minha_funcao()) or coluna = ... )
 - **Edge Function não vai junto no deploy do site.** Alterá-la exige republicar
   pelo painel do Supabase ou pela CLI. Front-end e função desalinhados produzem
   erros que não parecem versão.
+- **Repositório privado consome minutos de Actions.** Em repositório público
+  o Actions é gratuito; no privado, cada execução desconta da cota do plano.
+  Antes de criar workflow com agenda curta, veja o consumo em Settings →
+  Billing.
 
 ### 5. Ao investigar um problema
 
